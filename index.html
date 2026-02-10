@@ -3,73 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz San Valentín</title>
+    <title>¿Quieres ser mi San Valentín?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
+            padding: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #ffebee;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0e6d2; /* Color crema de fondo */
+            font-family: 'Indie Flower', cursive;
             overflow: hidden;
         }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            z-index: 10;
+
+        /* Estilo de la hoja de papel */
+        .paper {
+            width: 300px;
+            height: 350px;
+            background-color: #fff;
+            background-image: linear-gradient(#e1e1e1 1px, transparent 1px);
+            background-size: 100% 30px; /* Tamaño de los renglones */
+            position: relative;
+            padding: 20px;
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.2);
+            transform: rotate(-2deg); /* Un toque inclinado */
+            border-radius: 5px;
         }
-        h1 { color: #d32f2f; }
-        p { color: #555; font-size: 1.2rem; }
-        .heart {
-            color: #e91e63;
-            font-size: 50px;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        /* Corazones flotantes de fondo */
-        .bg-heart {
+
+        /* La línea roja del margen del cuaderno */
+        .paper::before {
+            content: '';
             position: absolute;
-            color: rgba(233, 30, 99, 0.2);
-            animation: move up 5s linear infinite;
+            top: 0;
+            left: 40px;
+            width: 2px;
+            height: 100%;
+            background-color: #ff9da4;
+        }
+
+        .content {
+            margin-left: 30px; /* Para respetar el margen rojo */
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        h1 {
+            color: #5c3a21;
+            font-size: 2rem;
+            line-height: 1.8; /* Ajuste para que caiga en los renglones */
+            margin-bottom: 30px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 2rem;
+            color: #5c3a21;
+        }
+
+        .option {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Dibujo de los cuadritos (checkbox) a mano */
+        .checkbox {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #5c3a21;
+            border-radius: 5px 8px 5px 12px; /* Bordes irregulares */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            color: #d32f2f;
+        }
+
+        /* El personaje del corazón (Emoji grande o imagen) */
+        .character {
+            position: absolute;
+            bottom: -50px;
+            right: -60px;
+            font-size: 100px;
+            transform: rotate(10deg);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: rotate(10deg) translateY(0); }
+            50% { transform: rotate(10deg) translateY(-10px); }
+        }
+
+        /* MENSAJE FINAL (Oculto al principio) */
+        #success-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        #success-message h2 {
+            font-size: 3rem;
+            color: #ff4081;
+            text-shadow: 2px 2px white;
+        }
+
+        /* Sticker decorativo */
+        .sticker {
+            position: absolute;
+            font-size: 40px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="heart">❤️</div>
-        <h1>¡Feliz San Valentín!</h1>
-        <p>Eres una persona muy especial. <br> Gracias por estar en mi vida.</p>
+
+    <div class="paper">
+        <div class="content">
+            <h1>¿QUIERES SER MI <br> SAN VALENTÍN?</h1>
+            
+            <div class="options">
+                <div class="option" onclick="selectOption('si')">
+                    <div class="checkbox" id="check-si"></div>
+                    <span>SÍ</span>
+                </div>
+
+                <div class="option" onclick="selectOption('no')">
+                    <div class="checkbox" id="check-no"></div>
+                    <span>NO</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sticker" style="bottom: 20px; left: 20px;">💌</div>
+        <div class="sticker" style="top: -10px; right: 10px; transform: rotate(20deg);">💕</div>
+        
+        <div class="character">🥰</div>
+    </div>
+
+    <div id="success-message">
+        <h2>¡SABÍA QUE DIRÍAS QUE SÍ! <br> TE AMO ❤️</h2>
+        <p>(Toma captura y mándamela)</p>
+        <button onclick="location.reload()" style="padding: 10px 20px; font-size: 1.2rem; border-radius: 10px; border: none; cursor: pointer;">Volver a ver</button>
     </div>
 
     <script>
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('bg-heart');
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
-            heart.innerText = "💗";
-            heart.style.fontSize = "20px";
-            heart.style.position = "absolute";
-            heart.style.top = "100vh";
-            document.body.appendChild(heart);
-            
-            heart.animate([
-                { transform: 'translateY(0)' },
-                { transform: `translateY(-110vh)` }
-            ], { duration: 3000 });
+        function selectOption(option) {
+            // Limpiamos los checks primero
+            document.getElementById('check-si').innerText = '';
+            document.getElementById('check-no').innerText = '';
 
-            setTimeout(() => { heart.remove(); }, 3000);
+            if (option === 'si') {
+                // Marcar el sí
+                document.getElementById('check-si').innerText = '✔';
+                
+                // Lanzar confeti y mensaje después de medio segundo
+                setTimeout(() => {
+                    launchConfetti();
+                    document.getElementById('success-message').style.display = 'flex';
+                }, 500);
+
+            } else if (option === 'no') {
+                // Marcar el no (triste, pero permitido)
+                document.getElementById('check-no').innerText = '✘';
+                alert("¿Segura? Intenta darle al otro 😉");
+                // Borramos la marca del no para que intente de nuevo
+                setTimeout(() => {
+                    document.getElementById('check-no').innerText = '';
+                }, 1000);
+            }
         }
-        setInterval(createHeart, 300);
+
+        // Función simple para crear lluvia de corazones
+        function launchConfetti() {
+            for(let i=0; i<50; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.style.position = 'fixed';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = '-10vh';
+                heart.style.fontSize = Math.random() * 30 + 10 + 'px';
+                heart.style.animation = `fall ${Math.random() * 2 + 2}s linear forwards`;
+                document.body.appendChild(heart);
+            }
+        }
+
+        // Inyectamos la animación de caída al final del CSS
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes fall {
+                to { transform: translateY(110vh) rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(styleSheet);
     </script>
 </body>
 </html>
