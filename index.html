@@ -28,6 +28,7 @@
             box-shadow: 15px 15px 30px rgba(0,0,0,0.2);
             border-radius: 15px;
             border: 1px solid #ffcdd2;
+            z-index: 10; /* Para estar sobre el fondo pero bajo la celebración */
         }
 
         .page {
@@ -72,7 +73,7 @@
         .svg-heart.red { fill: #c2185b; }
         .svg-flower { fill: #ff80ab; }
 
-        /* ESTILO PORTADA (CORAZÓN GIGANTE) */
+        /* ESTILO PORTADA */
         .fast-heart-container {
             display: flex;
             flex-direction: column;
@@ -97,14 +98,13 @@
             100% { transform: scale(1); }
         }
 
-        /* DECORACIÓN DE EMOJIS EN PORTADA */
+        /* EMOJIS EN PORTADA */
         .emoji-corner {
             position: absolute;
             font-size: 3rem;
             opacity: 0.8;
             animation: floatEmoji 3s ease-in-out infinite;
         }
-        
         @keyframes floatEmoji {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
@@ -153,14 +153,12 @@
             transform: rotate(2deg);
         }
 
-        /* MENSAJE FLOTANTE (FONDO ROSADO TRANSPARENTE) */
         .floating-message {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Rosado bajito con transparencia (0.9) */
             background: rgba(252, 228, 236, 0.9); 
             display: flex;
             flex-direction: column;
@@ -169,7 +167,7 @@
             text-align: center;
             z-index: 50;
             cursor: pointer;
-            backdrop-filter: blur(2px); /* Un toque borroso elegante */
+            backdrop-filter: blur(2px);
         }
 
         .reveal-heart {
@@ -241,6 +239,7 @@
             color: white;
         }
 
+        /* PANTALLA DE CELEBRACIÓN */
         #final-celebration {
             display: none;
             position: fixed;
@@ -249,17 +248,58 @@
             width: 100%;
             height: 100%;
             background-color: #fce4ec; 
-            z-index: 100;
+            z-index: 100; /* Por encima de todo */
             justify-content: center;
             align-items: center;
             flex-direction: column;
             text-align: center;
             padding: 40px;
             box-sizing: border-box;
+            overflow: hidden; /* Para que el collage no se salga */
         }
 
-        #final-celebration h1 { color: #880e4f; margin-bottom: 20px; }
-        #final-celebration p { font-size: 1.8rem; color: #c2185b; text-align: center; max-width: 800px; }
+        #final-celebration h1 { 
+            color: #880e4f; 
+            margin-bottom: 20px; 
+            font-size: 4rem;
+            z-index: 10; 
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+        }
+        
+        #final-celebration p { 
+            font-size: 1.8rem; 
+            color: #c2185b; 
+            text-align: center; 
+            max-width: 800px; 
+            z-index: 10;
+            background: rgba(255,255,255,0.6); /* Fondo suave para leer bien */
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        /* Corazón Gigante Final */
+        .final-huge-heart {
+            width: 200px;
+            height: 200px;
+            fill: #d81b60;
+            animation: heartbeat-fast 0.5s infinite;
+            margin-bottom: 30px;
+            z-index: 10;
+            filter: drop-shadow(0 0 20px rgba(233, 30, 99, 0.6));
+        }
+
+        /* Elementos del Collage de Fondo */
+        .collage-heart {
+            position: absolute;
+            opacity: 0.4;
+            z-index: 1; /* Detrás del texto */
+            animation: floatCollage 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatCollage {
+            from { transform: translateY(0) rotate(0deg); }
+            to { transform: translateY(-10px) rotate(5deg); }
+        }
 
         iframe {
             width: 80%;
@@ -409,10 +449,12 @@
     </div>
 
     <div id="final-celebration">
-        <svg class="svg-icon big svg-heart red" style="margin-bottom: 20px; transform: scale(2);"><use href="#heart-icon"></use></svg>
+        <svg class="final-huge-heart"><use href="#heart-icon"></use></svg>
+        
         <h1>¡TE AMO!</h1>
         <p>Te amo mi amor, qué lindo estar junto a ti, me encanta tu presencia, me encanta todo contigo mi amor, eres mi princesa tan bonita, brillas tan lindo mi amor, gracias por estar aquí y amarnos tanto mi amor.</p>
-    </div>
+        
+        </div>
 
     <script>
         let currentPage = 0;
@@ -468,7 +510,38 @@
 
         function celebrate() {
             document.getElementById('final-celebration').style.display = 'flex';
+            // Crear el collage de fondo
+            createCollage();
+            // Lluvia final
             launchFinalRain();
+        }
+
+        function createCollage() {
+            const container = document.getElementById('final-celebration');
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('collage-heart');
+                
+                // Color aleatorio entre rojos y rosas
+                const colors = ['#e91e63', '#f48fb1', '#d81b60', '#ff80ab', '#ffcdd2'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                heart.innerHTML = `<svg viewBox="0 0 24 24" style="fill:${color}"><use href="#heart-icon"></use></svg>`;
+                
+                // Posición aleatoria
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 100 + 30 + 'px';
+                heart.style.width = size;
+                heart.style.height = size;
+                
+                // Rotación aleatoria
+                heart.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                container.appendChild(heart);
+            }
         }
 
         function launchFinalRain() {
