@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz San Valentín</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffebee;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        h1 { color: #d32f2f; }
+        p { color: #555; font-size: 1.2rem; }
+        .heart {
+            color: #e91e63;
+            font-size: 50px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        /* Corazones flotantes de fondo */
+        .bg-heart {
+            position: absolute;
+            color: rgba(233, 30, 99, 0.2);
+            animation: move up 5s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart">❤️</div>
+        <h1>¡Feliz San Valentín!</h1>
+        <p>Eres una persona muy especial. <br> Gracias por estar en mi vida.</p>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('bg-heart');
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            heart.innerText = "💗";
+            heart.style.fontSize = "20px";
+            heart.style.position = "absolute";
+            heart.style.top = "100vh";
+            document.body.appendChild(heart);
+            
+            heart.animate([
+                { transform: 'translateY(0)' },
+                { transform: `translateY(-110vh)` }
+            ], { duration: 3000 });
+
+            setTimeout(() => { heart.remove(); }, 3000);
+        }
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
