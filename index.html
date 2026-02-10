@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¿Quieres ser mi San Valentín?</title>
+    <title>Para ti mi amor</title>
     <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <style>
         body {
@@ -13,27 +13,44 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f0e6d2; /* Color crema de fondo */
+            background-color: #e8dcc5; /* Color mesa de madera suave */
             font-family: 'Indie Flower', cursive;
             overflow: hidden;
         }
 
-        /* Estilo de la hoja de papel */
-        .paper {
-            width: 300px;
-            height: 350px;
-            background-color: #fff;
-            background-image: linear-gradient(#e1e1e1 1px, transparent 1px);
-            background-size: 100% 30px; /* Tamaño de los renglones */
+        /* Contenedor del cuaderno */
+        .notebook {
+            width: 90%;
+            max-width: 400px;
+            height: 550px;
             position: relative;
-            padding: 20px;
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.2);
-            transform: rotate(-2deg); /* Un toque inclinado */
+            background-color: #fff;
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
             border-radius: 5px;
+            /* Efecto de hojas apiladas */
+            border-bottom: 5px solid #ddd;
+            border-right: 5px solid #ddd;
         }
 
-        /* La línea roja del margen del cuaderno */
-        .paper::before {
+        /* Diseño de renglones y margen */
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 20px 20px 20px 50px; /* Padding izquierdo extra para el margen */
+            box-sizing: border-box;
+            background-image: linear-gradient(#e1e1e1 1px, transparent 1px);
+            background-size: 100% 30px; /* Altura del renglón */
+            background-color: #fff;
+            display: none; /* Ocultamos todas por defecto */
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Línea roja del margen */
+        .page::before {
             content: '';
             position: absolute;
             top: 0;
@@ -43,172 +60,192 @@
             background-color: #ff9da4;
         }
 
-        .content {
-            margin-left: 30px; /* Para respetar el margen rojo */
-            text-align: center;
-            padding-top: 10px;
+        /* Clase para mostrar la página activa */
+        .page.active {
+            display: flex;
+            animation: turnPage 0.6s ease-in-out;
+        }
+
+        @keyframes turnPage {
+            from { transform: rotateY(-90deg); opacity: 0; }
+            to { transform: rotateY(0); opacity: 1; }
+        }
+
+        p, h1 {
+            font-size: 1.4rem;
+            color: #444;
+            line-height: 30px; /* Alineado con los renglones */
+            margin: 0;
+            margin-bottom: 10px;
         }
 
         h1 {
-            color: #5c3a21;
+            color: #d32f2f;
             font-size: 2rem;
-            line-height: 1.8; /* Ajuste para que caiga en los renglones */
+            text-align: center;
             margin-bottom: 30px;
         }
 
-        .options {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            font-size: 2rem;
-            color: #5c3a21;
-        }
-
-        .option {
+        /* Botón flecha siguiente */
+        .next-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 3rem;
+            color: #d32f2f;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            z-index: 10;
+            animation: bounce 2s infinite;
         }
 
-        /* Dibujo de los cuadritos (checkbox) a mano */
-        .checkbox {
-            width: 30px;
-            height: 30px;
-            border: 3px solid #5c3a21;
-            border-radius: 5px 8px 5px 12px; /* Bordes irregulares */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 25px;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* Estilo para las opciones finales */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            padding: 10px;
+            border: 2px solid #d32f2f;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
             color: #d32f2f;
         }
 
-        /* El personaje del corazón (Emoji grande o imagen) */
-        .character {
-            position: absolute;
-            bottom: -50px;
-            right: -60px;
-            font-size: 100px;
-            transform: rotate(10deg);
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: rotate(10deg) translateY(0); }
-            50% { transform: rotate(10deg) translateY(-10px); }
+        .option-btn:hover {
+            background-color: #ffebee;
+            transform: scale(1.05);
         }
 
-        /* MENSAJE FINAL (Oculto al principio) */
-        #success-message {
+        /* Mensaje final pantalla completa */
+        #final-celebration {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             z-index: 100;
             justify-content: center;
             align-items: center;
-            color: white;
             flex-direction: column;
+            color: white;
             text-align: center;
-        }
-        
-        #success-message h2 {
-            font-size: 3rem;
-            color: #ff4081;
-            text-shadow: 2px 2px white;
-        }
-
-        /* Sticker decorativo */
-        .sticker {
-            position: absolute;
-            font-size: 40px;
         }
     </style>
 </head>
 <body>
 
-    <div class="paper">
-        <div class="content">
-            <h1>¿QUIERES SER MI <br> SAN VALENTÍN?</h1>
-            
-            <div class="options">
-                <div class="option" onclick="selectOption('si')">
-                    <div class="checkbox" id="check-si"></div>
-                    <span>SÍ</span>
-                </div>
+    <div class="notebook">
+        <div class="page active">
+            <p>Hola mi amor bonita,</p>
+            <p>Se acercan fechas especiales, especiales como tú mi amor, como tú me haces sentir.</p>
+            <p>Días llenos de amor a tu lado mi amor, qué lindo es estar a tu ladito. ❤️</p>
+        </div>
 
-                <div class="option" onclick="selectOption('no')">
-                    <div class="checkbox" id="check-no"></div>
-                    <span>NO</span>
-                </div>
+        <div class="page">
+            <p>Siempre somos un equipo,</p>
+            <p>Siempre amándonos mucho mi amor, apoyándonos mucho mi amor.</p>
+            <p>Estoy tan orgulloso de ti. 🌟</p>
+        </div>
+
+        <div class="page">
+            <p>Te amo intensamente mi princesa,</p>
+            <p>En tus ojos el universo entero, en tus ojitos las estrellas, en tu carita todo lo bonito.</p>
+            <p>Me pierdo en ti, en tus ojos, en tu pelo, en ti.</p>
+            <p>Te amo intensamente. 🌹</p>
+        </div>
+
+        <div class="page">
+            <p>Cada beso, cada abrazo,</p>
+            <p>Sintiendo el calor de tu cuerpo en el mío, nuestras almas bailando juntas mi amor.</p>
+            <p>Tu aroma me fascina, tu carita me encanta, tus labios bonitos me incitan a besarte.</p>
+            <p>Me causas tanta emoción solo con verte mi amor. 😍</p>
+        </div>
+
+        <div class="page">
+            <h1>¿Quieres ser mi San Valentín?</h1>
+            <div class="options-grid">
+                <button class="option-btn" onclick="celebrate()">Sí</button>
+                <button class="option-btn" onclick="celebrate()">Por Supuesto</button>
+                <button class="option-btn" onclick="celebrate()">Sí sí sí sí</button>
+                <button class="option-btn" onclick="celebrate()">Obvio que Sí</button>
             </div>
         </div>
 
-        <div class="sticker" style="bottom: 20px; left: 20px;">💌</div>
-        <div class="sticker" style="top: -10px; right: 10px; transform: rotate(20deg);">💕</div>
-        
-        <div class="character">🥰</div>
+        <button class="next-btn" onclick="nextPage()">➜</button>
     </div>
 
-    <div id="success-message">
-        <h2>¡SABÍA QUE DIRÍAS QUE SÍ! <br> TE AMO ❤️</h2>
-        <p>(Toma captura y mándamela)</p>
-        <button onclick="location.reload()" style="padding: 10px 20px; font-size: 1.2rem; border-radius: 10px; border: none; cursor: pointer;">Volver a ver</button>
+    <div id="final-celebration">
+        <h1 style="color: #ff4081; font-size: 3rem;">¡TE AMO MI AMOR! 💘</h1>
+        <p style="color: white; font-size: 1.5rem;">Gracias por hacerme el más feliz.</p>
     </div>
 
     <script>
-        function selectOption(option) {
-            // Limpiamos los checks primero
-            document.getElementById('check-si').innerText = '';
-            document.getElementById('check-no').innerText = '';
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
+        const nextBtn = document.querySelector('.next-btn');
 
-            if (option === 'si') {
-                // Marcar el sí
-                document.getElementById('check-si').innerText = '✔';
+        function nextPage() {
+            if (currentPage < pages.length - 1) {
+                // Ocultar página actual
+                pages[currentPage].classList.remove('active');
                 
-                // Lanzar confeti y mensaje después de medio segundo
-                setTimeout(() => {
-                    launchConfetti();
-                    document.getElementById('success-message').style.display = 'flex';
-                }, 500);
+                // Avanzar índice
+                currentPage++;
+                
+                // Mostrar nueva página
+                pages[currentPage].classList.add('active');
 
-            } else if (option === 'no') {
-                // Marcar el no (triste, pero permitido)
-                document.getElementById('check-no').innerText = '✘';
-                alert("¿Segura? Intenta darle al otro 😉");
-                // Borramos la marca del no para que intente de nuevo
-                setTimeout(() => {
-                    document.getElementById('check-no').innerText = '';
-                }, 1000);
+                // Si es la última página, ocultar la flecha
+                if (currentPage === pages.length - 1) {
+                    nextBtn.style.display = 'none';
+                }
             }
         }
 
-        // Función simple para crear lluvia de corazones
+        function celebrate() {
+            document.getElementById('final-celebration').style.display = 'flex';
+            launchConfetti();
+        }
+
         function launchConfetti() {
-            for(let i=0; i<50; i++) {
-                const heart = document.createElement('div');
-                heart.innerHTML = '❤️';
-                heart.style.position = 'fixed';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.top = '-10vh';
-                heart.style.fontSize = Math.random() * 30 + 10 + 'px';
-                heart.style.animation = `fall ${Math.random() * 2 + 2}s linear forwards`;
-                document.body.appendChild(heart);
+            for(let i=0; i<100; i++) {
+                const confetti = document.createElement('div');
+                confetti.innerText = ['❤️', '🌹', '🥰', '💕'][Math.floor(Math.random() * 4)];
+                confetti.style.position = 'fixed';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10vh';
+                confetti.style.fontSize = Math.random() * 30 + 10 + 'px';
+                confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear infinite`;
+                document.body.appendChild(confetti);
             }
         }
 
-        // Inyectamos la animación de caída al final del CSS
-        const styleSheet = document.createElement("style");
-        styleSheet.innerText = `
+        // Estilos de animación inyectados
+        const style = document.createElement('style');
+        style.innerHTML = `
             @keyframes fall {
-                to { transform: translateY(110vh) rotate(360deg); }
+                to { transform: translateY(110vh) rotate(720deg); }
             }
         `;
-        document.head.appendChild(styleSheet);
+        document.head.appendChild(style);
     </script>
+
 </body>
 </html>
