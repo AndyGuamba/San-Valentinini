@@ -13,24 +13,26 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Fondo con patrón de corazones */
-            background-color: #ffebef;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff9a9e' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            /* Fondo de corazones */
+            background-color: #ffebee;
+            background-image: radial-gradient(#ef9a9a 15%, transparent 16%), radial-gradient(#ef9a9a 15%, transparent 16%);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
             font-family: 'Indie Flower', cursive;
             overflow: hidden;
         }
 
         .notebook {
-            /* Hojas más grandes como pediste */
-            width: 95%;
-            max-width: 600px; 
-            height: 850px;
+            /* TAMAÑO AJUSTADO: Más pequeño y vertical */
+            width: 90%;
+            max-width: 450px; /* Antes 600px */
+            height: 680px;    /* Antes 850px */
             position: relative;
             background-color: #fff;
-            box-shadow: 15px 15px 30px rgba(0,0,0,0.3);
+            box-shadow: 10px 10px 25px rgba(0,0,0,0.3);
             border-radius: 10px;
-            border-bottom: 10px solid #d1c4e9; /* Borde lila/suave */
-            border-right: 10px solid #d1c4e9;
+            border-bottom: 8px solid #c5cae9;
+            border-right: 8px solid #c5cae9;
         }
 
         .page {
@@ -39,18 +41,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Margen superior más grande para que entre el texto */
-            padding: 40px 30px 20px 70px; 
+            padding: 20px 20px 60px 50px; /* Espacio para el margen rojo */
             box-sizing: border-box;
             background-color: #fff;
-            /* Renglones decorativos */
-            background-image: linear-gradient(#f0f0f0 1px, transparent 1px);
-            background-size: 100% 40px; 
+            /* Renglones */
+            background-image: linear-gradient(#e0e0e0 1px, transparent 1px);
+            background-size: 100% 30px; 
             display: none;
             flex-direction: column;
-            justify-content: flex-start; /* Todo empieza arriba */
             align-items: center;
             border-radius: 5px;
+            overflow: hidden; /* Para que nada se salga */
         }
 
         /* Línea roja del margen */
@@ -58,16 +59,16 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 50px;
-            width: 3px;
+            left: 35px;
+            width: 2px;
             height: 100%;
             background-color: #ff4081;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         .page.active {
             display: flex;
-            animation: turnPage 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            animation: turnPage 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         @keyframes turnPage {
@@ -75,118 +76,134 @@
             to { transform: rotateY(0); opacity: 1; }
         }
 
-        /* Textos */
+        /* Texto base de la carta */
         p {
-            font-size: 1.6rem;
+            font-size: 1.3rem; /* Letra ajustada al nuevo tamaño */
             color: #4a4a4a;
-            line-height: 40px; /* Alineado a los renglones */
+            line-height: 30px;
             margin: 0;
             width: 100%;
             text-align: left;
-            margin-bottom: 20px;
-            z-index: 2;
+            margin-bottom: 10px;
+            z-index: 1;
         }
 
-        /* Títulos */
         h1 {
             color: #d81b60;
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             text-align: center;
-            margin-top: 100px;
-            margin-bottom: 30px;
-            z-index: 2;
+            margin-top: 60px;
+            margin-bottom: 20px;
         }
 
-        /* Estilo para las fotos (debajo del texto) */
+        /* Fotos */
         .photo {
-            width: 90%;
-            height: 300px;
+            width: 80%;
+            height: 200px;
             object-fit: cover;
-            border: 12px solid white;
-            box-shadow: 3px 6px 15px rgba(0,0,0,0.2);
+            border: 8px solid white;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
             transform: rotate(-3deg);
-            margin-top: auto; /* Empuja la foto hacia abajo si sobra espacio */
-            margin-bottom: 50px;
-            z-index: 2;
+            margin-top: auto; 
+            margin-bottom: 20px;
+            z-index: 1;
         }
 
-        /* Foto grande sola */
         .photo-large {
-            width: 95%;
-            height: 600px;
+            width: 90%;
+            height: 450px;
             object-fit: cover;
-            border: 15px solid white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 10px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             transform: rotate(2deg);
-            margin-top: 40px;
+            margin-top: 30px;
+        }
+
+        /* EL MENSAJE FLOTANTE (Interactivo) */
+        .floating-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex; /* Se controla con JS */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 50; /* Muy por encima */
+            padding: 20px;
+            box-sizing: border-box;
+            cursor: pointer; /* Manito para indicar click */
+            animation: popIn 0.5s;
+        }
+
+        .floating-message h2 {
+            font-size: 2rem;
+            color: #c2185b;
+            margin-bottom: 10px;
+        }
+
+        .floating-message span {
+            font-size: 1rem;
+            color: #888;
+            margin-top: 20px;
+            border: 1px dashed #888;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         /* Botón siguiente */
         .next-btn {
             position: absolute;
-            bottom: 20px;
-            right: 25px;
+            bottom: 15px;
+            right: 15px;
             background: none;
             border: none;
-            font-size: 4rem;
+            font-size: 3rem;
             color: #e91e63;
             cursor: pointer;
-            z-index: 20;
+            z-index: 60;
             transition: transform 0.2s;
         }
         .next-btn:hover { transform: scale(1.2); }
 
-        /* DECORACIONES (Oso, Rosas, Corazones) */
+        /* Stickers */
         .sticker {
             position: absolute;
-            font-size: 50px;
-            opacity: 0.9;
-            z-index: 1;
+            font-size: 40px;
+            z-index: 0;
+            opacity: 0.8;
         }
 
-        /* Página de PREGUNTA FINAL (Estilo especial) */
-        .page-question {
-            background-color: #f8bbd0 !important; /* Fondo Rosado */
-            background-image: none !important;
-            justify-content: center;
-        }
-
+        /* Estilo opciones final */
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-top: 40px;
+            gap: 15px;
+            margin-top: 30px;
             width: 100%;
         }
 
         .option-btn {
-            padding: 20px;
+            padding: 15px;
             border: 2px solid #c2185b;
-            background-color: #ffcdd2; /* Fondo rojo leve */
-            border-radius: 20px;
+            background-color: #ffcdd2;
+            border-radius: 15px;
             font-family: 'Indie Flower', cursive;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: #880e4f;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 0 #c2185b;
+            box-shadow: 0 4px 0 #c2185b;
         }
 
-        .option-btn:hover {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #c2185b;
-            background-color: #ef9a9a;
-        }
-
-        /* Video de YouTube */
-        iframe {
-            width: 100%;
-            height: 300px;
-            border: 8px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border-radius: 10px;
-            margin-top: 30px;
-        }
+        .option-btn:hover { transform: translateY(2px); box-shadow: 0 2px 0 #c2185b; }
 
         /* Celebración */
         #final-celebration {
@@ -204,6 +221,15 @@
             color: white;
             text-align: center;
         }
+        
+        iframe {
+            width: 100%;
+            height: 250px;
+            border: 5px solid white;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -211,51 +237,68 @@
     <div class="notebook">
         
         <div class="page active" style="justify-content: center; text-align: center;">
-            <div class="sticker" style="top: 20px; right: 20px;">🌹</div>
-            <div class="sticker" style="bottom: 80px; left: 20px;">🧸</div>
-            <h1>Te amo, me encantas tanto 💘</h1>
-            <div style="font-size: 100px; margin-top: 20px;">💑</div>
+            <div class="sticker" style="top: 20px; left: 20px;">❤️</div>
+            <div class="sticker" style="bottom: 20px; right: 20px;">❤️</div>
+            <h1>Te amo, me encantas tanto</h1>
+            <div style="font-size: 80px; margin-top: 20px;">💑</div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1rem; color: #888;">(Abre el cuaderno)</p>
         </div>
 
         <div class="page">
-            <div class="sticker" style="top: 10px; right: 10px;">❤️</div>
-            <p>Hola mi amor bonita, Te amo con todo mi corazón, pronto son fechas importantes mi amor y aunque no necesito un día especial para amarte, me gusta recordarte cuánto Te amo, cuánto te adoro y cuánto siento por ti.</p>
+            <div class="floating-message" onclick="this.style.display='none'">
+                <h2>Te amo intensamente mi amor</h2>
+                <div style="font-size: 50px;">💑</div>
+                <span>(Toca para leer)</span>
+            </div>
+
+            <p>Hola mi amor bonita, Te amo con todo mi corazón, pronto son fechas importantes mi amor y aunque no necesito un día especial para amarte, me gusta recordarte cuánto Te amo.</p>
             <img src="imagen1.jpeg" class="photo" alt="Foto 1">
         </div>
 
         <div class="page">
-            <div class="sticker" style="bottom: 10px; left: 10px;">🌹</div>
-            <p>¡Me encanta estar junto a ti! Eres mi princesa bonita, mi niña preciosa, pero por sobre todo somos un equipo, siempre apoyándonos, siempre estando juntos mi amor. Te amo intensamente siempre, todos los días Te amo mucho más, eres tú mi mayor adoración mi amor, Te amo tanto.</p>
+            <div class="floating-message" onclick="this.style.display='none'">
+                <h2>En ti me pierdo siempre, con tu mirada me hipnotizas mi amor</h2>
+                <div style="font-size: 50px;">😍</div>
+                <span>(Toca para leer)</span>
+            </div>
+
+            <p>¡Me encanta estar junto a ti! Eres mi princesa bonita, mi niña preciosa, pero por sobre todo somos un equipo. Te amo intensamente siempre, todos los días Te amo mucho más.</p>
             <img src="imagen2.jpeg" class="photo" alt="Foto 2">
         </div>
 
         <div class="page">
-            <div class="sticker" style="top: 50px; right: 20px;">✨</div>
-            <p>Eres tan hermosa, me haces tan feliz mi amor bonita, eres tan hermosa como el cielito. Cuando veo a tus ojitos veo el universo entero en tu mirar, en ti, todo lo bonito. Tu carita me fascina, tú, me encantas, el ser de ti me encantas tanto mi amor, el estar contigo es felicidad mi amor.</p>
+            <div class="floating-message" onclick="this.style.display='none'">
+                <h2>Intensamente enamorado de ti mi amor, Te amo con mi alma, con mi corazón y con mi vida</h2>
+                <div style="font-size: 50px;">💘</div>
+                <span>(Toca para leer)</span>
+            </div>
+
+            <p>Eres tan hermosa, me haces tan feliz mi amor bonita, eres tan hermosa como el cielito. En ti veo todo lo bonito. Tu carita me fascina, tú, me encantas tanto mi amor.</p>
             <img src="imagen3.jpeg" class="photo" alt="Foto 3">
         </div>
 
         <div class="page">
-            <div class="sticker" style="bottom: 20px; right: 20px;">🥰</div>
-            <p>En ti me pierdo mi amor, al ver tu carita, al verte a ti me pongo nervioso, me pongo feliz, porque verte me encanta mi amor, porque estar contigo me fascina. Vivo enamorado de ti y de la forma que tienes de amar, me tienes loquito por ti, siempre estás tan preciosa mi amor. Te amo tanto mi vida.</p>
+            <div class="floating-message" onclick="this.style.display='none'">
+                <h2>Eres mi adoración, mi princesa bonita, mi niña preciosa, tan linda, tan preciosa, me encantas tanto!</h2>
+                <div style="font-size: 50px;">🥰</div>
+                <span>(Toca para leer)</span>
+            </div>
+
+            <p>En ti me pierdo mi amor, al ver tu carita me pongo nervioso, me pongo feliz. Vivo enamorado de ti y de la forma que tienes de amar, me tienes loquito por ti. Te amo tanto.</p>
             <img src="imagen4.jpeg" class="photo" alt="Foto 4">
         </div>
 
         <div class="page" style="justify-content: center;">
-            <div class="sticker" style="top: 20px; left: 20px;">🎶</div>
-            <div class="sticker" style="bottom: 20px; right: 20px;">🎸</div>
-            <p style="text-align: center;">Mi amor esta canción siempre me recuerda a ti y cada vez que la escucho pienso en ti... ❤️</p>
+            <p style="text-align: center;">Mi amor esta canción siempre me recuerda a ti... 🎶</p>
             <iframe src="https://www.youtube.com/embed/5X-Mrc2l1d0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <div class="page" style="justify-content: center;">
-            <div class="sticker" style="top: 10px; right: 40px;">🧸</div>
+            <div class="sticker" style="top: 20px; right: 20px;">💑</div>
             <img src="asAD.jpeg" class="photo-large" alt="Foto Especial">
         </div>
 
-        <div class="page page-question">
-            <div class="sticker" style="top: 20px; left: 20px; font-size: 60px;">🌹</div>
-            <div class="sticker" style="bottom: 20px; right: 20px; font-size: 60px;">🧸</div>
+        <div class="page" style="background-color: #f8bbd0; justify-content: center;">
             <h1>¿Quieres ser mi San Valentín?</h1>
             <div class="options-grid">
                 <button class="option-btn" onclick="celebrate()">Sí 😍</button>
@@ -269,9 +312,9 @@
     </div>
 
     <div id="final-celebration">
-        <h1 style="color: #ff4081; font-size: 3rem;">¡TE AMO MI AMOR! 💘</h1>
-        <p style="color: white; font-size: 1.5rem;">Eres el amor de mi vida.</p>
-        <div style="font-size: 5rem; margin-top: 20px;">💏</div>
+        <h1 style="color: #ff4081; font-size: 3rem;">¡TE AMO!</h1>
+        <p style="color: white; font-size: 1.5rem;">Eres mi vida entera.</p>
+        <div style="font-size: 6rem; margin-top: 20px;">💑 💏 👫</div>
     </div>
 
     <script>
@@ -285,7 +328,12 @@
                 currentPage++;
                 pages[currentPage].classList.add('active');
 
-                // Si llegamos a la última página, ocultamos la flecha
+                // IMPORTANTE: Restaurar el mensaje flotante si existe en la nueva página
+                const newMessage = pages[currentPage].querySelector('.floating-message');
+                if (newMessage) {
+                    newMessage.style.display = 'flex';
+                }
+
                 if (currentPage === pages.length - 1) {
                     nextBtn.style.display = 'none';
                 }
@@ -298,9 +346,10 @@
         }
 
         function launchConfetti() {
-            for(let i=0; i<100; i++) {
+            for(let i=0; i<80; i++) {
                 const confetti = document.createElement('div');
-                confetti.innerText = ['❤️', '🌹', '🧸', '💘'][Math.floor(Math.random() * 4)];
+                // Emojis de pareja en el confeti también
+                confetti.innerText = ['💑', '💏', '❤️', '💕'][Math.floor(Math.random() * 4)];
                 confetti.style.position = 'fixed';
                 confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.top = '-10vh';
@@ -313,7 +362,7 @@
         const style = document.createElement('style');
         style.innerHTML = `
             @keyframes fall {
-                to { transform: translateY(110vh) rotate(720deg); }
+                to { transform: translateY(110vh) rotate(360deg); }
             }
         `;
         document.head.appendChild(style);
