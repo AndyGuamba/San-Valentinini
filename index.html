@@ -73,37 +73,41 @@
         .svg-heart.pink { fill: #f48fb1; }
         .svg-heart.red { fill: #c2185b; }
 
-        /* Contenedor del corazón flechado de la portada */
+        /* --- NUEVO ESTILO PARA EL CORAZÓN FLECHADO --- */
         .cupid-heart-container {
             position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 0 auto;
+            width: 180px; /* Un poco más grande */
+            height: 180px;
+            margin: 20px auto;
             animation: pulse 1.5s infinite;
         }
         
         .cupid-heart {
             width: 100%;
             height: 100%;
-            fill: #d81b60;
+            fill: #d81b60; /* Color del corazón */
         }
 
-        /* La flecha superpuesta */
-        .cupid-arrow {
+        /* La nueva flecha blanca bonita */
+        .cupid-arrow-svg {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            fill: #444; /* Color de la flecha */
+            top: -20px; /* Ajuste de posición */
+            left: -20px;
+            width: 220px; /* Más larga que el corazón */
+            height: 220px;
+            fill: white; /* FLECHA BLANCA */
+            stroke: #f8bbd0; /* Borde rosado suave para que resalte */
+            stroke-width: 1px;
             z-index: 10;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2)); /* Sombra suave */
         }
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
+        /* ----------------------------------------- */
 
         .content-left {
             flex: 1;
@@ -278,8 +282,8 @@
         <symbol id="heart-icon" viewBox="0 0 24 24">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </symbol>
-        <symbol id="arrow-icon" viewBox="0 0 24 24">
-            <path d="M2.01 21.99L2 22l2.99-2.99 2.98-2.98-1.42-1.41-1.57 1.57L12 9.16l2.92 2.92-1.41 1.42-2.92-2.92L5.59 15.59 7.16 17.16 5.75 18.58 3.42 16.25 2.01 17.66 2.01 21.99z M21.99 2.01L22 2l-2.99 2.99-2.98 2.98 1.42 1.41 1.57-1.57L12 14.84l-2.92-2.92 1.41-1.42 2.92 2.92L18.41 8.41 16.84 6.84 18.25 5.42 20.58 7.75 21.99 6.34 21.99 2.01z" fill="black"/>
+        <symbol id="cupid-arrow-icon" viewBox="0 0 512 512">
+            <path d="M496.1 15.9c-10.3-10.3-26.9-10.3-37.2 0L288 186.8V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h192v192c0 17.7 14.3 32 32 32s32-14.3 32-32V320h122.8L458.9 53.1c10.3-10.3 10.3-26.9 0-37.2zM64 256c0-17.7 14.3-32 32-32s32 14.3 32 32h64v64h-64c-17.7 0-32 14.3-32 32s14.3 32 32 32v64H64v-64c-17.7 0-32-14.3-32-32s14.3-32 32-32V256z" transform="rotate(45, 256, 256)"/>
         </symbol>
     </svg>
 
@@ -295,7 +299,7 @@
             
             <div class="cupid-heart-container">
                 <svg class="cupid-heart"><use href="#heart-icon"></use></svg>
-                <svg class="cupid-arrow"><use href="#arrow-icon"></use></svg>
+                <svg class="cupid-arrow-svg"><use href="#cupid-arrow-icon"></use></svg>
             </div>
             
             <p style="text-align: center; margin-top: 40px; color: #888;">(Haz clic en Siguiente)</p>
