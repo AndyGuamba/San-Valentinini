@@ -59,55 +59,35 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* CLASES PARA LOS CORAZONES SVG */
-        .svg-heart {
+        /* CLASES PARA LOS SVG */
+        .svg-icon {
             width: 30px;
             height: 30px;
-            fill: #e91e63;
             display: inline-block;
             vertical-align: middle;
             margin: 0 5px;
         }
-
-        .svg-heart.big { width: 60px; height: 60px; }
+        .svg-icon.big { width: 60px; height: 60px; }
+        .svg-heart { fill: #e91e63; }
         .svg-heart.pink { fill: #f48fb1; }
         .svg-heart.red { fill: #c2185b; }
+        .svg-flower { fill: #ff80ab; }
 
-        /* --- NUEVO ESTILO PARA EL CORAZÓN FLECHADO --- */
-        .cupid-heart-container {
-            position: relative;
-            width: 180px; /* Un poco más grande */
-            height: 180px;
-            margin: 20px auto;
-            animation: pulse 1.5s infinite;
+        /* ESTILO PARA LA MANO CON CORAZÓN DE LA PORTADA */
+        .hand-heart-container {
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            animation: float 2s ease-in-out infinite;
         }
-        
-        .cupid-heart {
+        .hand-heart-svg {
             width: 100%;
             height: 100%;
-            fill: #d81b60; /* Color del corazón */
         }
-
-        /* La nueva flecha blanca bonita */
-        .cupid-arrow-svg {
-            position: absolute;
-            top: -20px; /* Ajuste de posición */
-            left: -20px;
-            width: 220px; /* Más larga que el corazón */
-            height: 220px;
-            fill: white; /* FLECHA BLANCA */
-            stroke: #f8bbd0; /* Borde rosado suave para que resalte */
-            stroke-width: 1px;
-            z-index: 10;
-            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2)); /* Sombra suave */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        /* ----------------------------------------- */
 
         .content-left {
             flex: 1;
@@ -135,10 +115,11 @@
 
         h1 {
             color: #d81b60;
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             text-align: center;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            line-height: 1.2;
         }
 
         .photo {
@@ -274,6 +255,16 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
+
+        /* Estilos para la lluvia de elementos */
+        .rain-element {
+            position: fixed;
+            top: -50px;
+            z-index: 150;
+            pointer-events: none;
+        }
+        .rain-element svg { width: 100%; height: 100%; }
+
     </style>
 </head>
 <body>
@@ -282,24 +273,28 @@
         <symbol id="heart-icon" viewBox="0 0 24 24">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </symbol>
-        <symbol id="cupid-arrow-icon" viewBox="0 0 512 512">
-            <path d="M496.1 15.9c-10.3-10.3-26.9-10.3-37.2 0L288 186.8V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v192H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h192v192c0 17.7 14.3 32 32 32s32-14.3 32-32V320h122.8L458.9 53.1c10.3-10.3 10.3-26.9 0-37.2zM64 256c0-17.7 14.3-32 32-32s32 14.3 32 32h64v64h-64c-17.7 0-32 14.3-32 32s14.3 32 32 32v64H64v-64c-17.7 0-32-14.3-32-32s14.3-32 32-32V256z" transform="rotate(45, 256, 256)"/>
+        <symbol id="flower-icon" viewBox="0 0 24 24">
+            <path d="M12,2C10.9,2 10,2.9 10,4V6.5C8.5,5.3 6.4,5.3 5,6.5C3.6,7.6 3.6,9.7 5,11C6.2,12 8.1,12 9.5,11.3V13.5C8.1,12.8 6.2,12.8 5,14C3.6,15.1 3.6,17.2 5,18.5C6.4,19.7 8.5,19.7 10,18.5V21C10,22.1 10.9,23 12,23C13.1,23 14,22.1 14,21V18.5C15.5,19.7 17.6,19.7 19,18.5C20.4,17.2 20.4,15.1 19,14C17.8,12.8 15.9,12.8 14.5,13.5V11.3C15.9,12 17.8,12 19,11C20.4,9.7 20.4,7.6 19,6.5C17.6,5.3 15.5,5.3 14,6.5V4C14,2.9 13.1,2 12,2M12,10C10.9,10 10,10.9 10,12C10,13.1 10.9,14 12,14C13.1,14 14,13.1 14,12C14,10.9 13.1,10 12,10Z"/>
+        </symbol>
+        <symbol id="hand-heart-icon" viewBox="0 0 24 24">
+            <path d="M12.5,9A1.5,1.5 0 0,0 11,10.5A1.5,1.5 0 0,0 12.5,12A1.5,1.5 0 0,0 14,10.5A1.5,1.5 0 0,0 12.5,9M11,19.9C11.5,19.96 12,20 12.5,20C15.5,20 18,17.5 18,14.5C18,13.86 17.87,13.25 17.63,12.68L20.73,9.58L19.32,8.17L16.24,11.25C15.37,10.38 14.17,9.8 12.86,9.57C11.65,8.07 9.84,7.24 7.93,7.24C4.56,7.24 2,9.79 2,13.15C2,17.12 6,21 11,23.88C9.14,23.11 7.53,21.78 6.35,20.11C7.47,20.77 8.77,21.18 10.15,21.24L11,19.9Z" />
+            <path d="M21.41 11.58l-6.83 6.83c-1.25 1.25-3.27 1.25-4.51 0l-1.42-1.41 1.42-1.41 1.41 1.41c.46.47 1.22.47 1.69 0l6.83-6.83L21.41 11.58z" fill="#d81b60"/>
+            <path d="M10.04 17.45l-1.41-1.42 1.41-1.41 1.42 1.41-1.42 1.42z" fill="#d81b60"/>
         </symbol>
     </svg>
 
     <div class="notebook">
         
         <div class="page active" style="flex-direction: column; justify-content: center;">
-            <svg class="decor svg-heart big red" style="top: 30px; left: 30px;"><use href="#heart-icon"></use></svg>
-            <svg class="decor svg-heart big pink" style="top: 30px; right: 30px;"><use href="#heart-icon"></use></svg>
-            <svg class="decor svg-heart big pink" style="bottom: 30px; left: 30px;"><use href="#heart-icon"></use></svg>
-            <svg class="decor svg-heart big red" style="bottom: 30px; right: 30px;"><use href="#heart-icon"></use></svg>
+            <svg class="decor svg-icon big svg-heart red" style="top: 30px; left: 30px;"><use href="#heart-icon"></use></svg>
+            <svg class="decor svg-icon big svg-flower" style="top: 30px; right: 30px;"><use href="#flower-icon"></use></svg>
+            <svg class="decor svg-icon big svg-flower" style="bottom: 30px; left: 30px;"><use href="#flower-icon"></use></svg>
+            <svg class="decor svg-icon big svg-heart red" style="bottom: 30px; right: 30px;"><use href="#heart-icon"></use></svg>
             
-            <h1>Te amo, me encantas tanto</h1>
+            <h1>Te amo, me encantas tanto,<br>estás tan linda.<br>Para ti mi amor bonita.</h1>
             
-            <div class="cupid-heart-container">
-                <svg class="cupid-heart"><use href="#heart-icon"></use></svg>
-                <svg class="cupid-arrow-svg"><use href="#cupid-arrow-icon"></use></svg>
+            <div class="hand-heart-container">
+                <svg class="hand-heart-svg" style="fill: #d81b60;"><use href="#hand-heart-icon"></use></svg>
             </div>
             
             <p style="text-align: center; margin-top: 40px; color: #888;">(Haz clic en Siguiente)</p>
@@ -308,18 +303,18 @@
         <div class="page">
             <div class="floating-message" onclick="this.style.opacity='0'; setTimeout(()=>this.style.display='none', 500);">
                 <h2>Te amo intensamente mi amor</h2>
-                <svg class="svg-heart big red"><use href="#heart-icon"></use></svg>
+                <svg class="svg-icon big svg-heart red"><use href="#heart-icon"></use></svg>
                 <div class="tap-hint">Toca para leer</div>
             </div>
 
             <div class="content-left">
-                <img src="imagen1.1.jpeg" class="photo" alt="Foto 1">
+                <img src="imagen1.1.jpeg" class="photo" alt="Foto 1.1">
             </div>
             <div class="content-right">
                 <p>Hola, mi amor bonita. Te amo con todo mi corazón. Pronto vienen fechas importantes y, aunque no necesito un día especial para amarte, me encanta recordarte lo mucho que te amo y lo importante que eres para mí.</p>
                 <div style="margin-top: 20px; text-align: right;">
-                    <svg class="svg-heart pink"><use href="#heart-icon"></use></svg>
-                    <svg class="svg-heart red"><use href="#heart-icon"></use></svg>
+                    <svg class="svg-icon svg-heart pink"><use href="#heart-icon"></use></svg>
+                    <svg class="svg-icon svg-heart red"><use href="#heart-icon"></use></svg>
                 </div>
             </div>
         </div>
@@ -327,7 +322,7 @@
         <div class="page">
             <div class="floating-message" onclick="this.style.opacity='0'; setTimeout(()=>this.style.display='none', 500);">
                 <h2>En ti me pierdo siempre, con tu mirada me hipnotizas mi amor</h2>
-                <svg class="svg-heart big pink"><use href="#heart-icon"></use></svg>
+                <svg class="svg-icon big svg-heart pink"><use href="#heart-icon"></use></svg>
                 <div class="tap-hint">Toca para leer</div>
             </div>
 
@@ -337,7 +332,7 @@
             <div class="content-right">
                 <p>¡Me encanta estar junto a ti! Eres mi princesa bonita, mi niña preciosa, pero, por sobre todo, somos un equipo. Te amo intensamente, siempre, todos los días y cada día te amo mucho más.</p>
                 <div style="margin-top: 20px; text-align: right;">
-                    <svg class="svg-heart red"><use href="#heart-icon"></use></svg>
+                    <svg class="svg-icon svg-heart red"><use href="#heart-icon"></use></svg>
                 </div>
             </div>
         </div>
@@ -345,7 +340,7 @@
         <div class="page">
             <div class="floating-message" onclick="this.style.opacity='0'; setTimeout(()=>this.style.display='none', 500);">
                 <h2>Intensamente enamorado de ti mi amor, Te amo con mi alma, con mi corazón y con mi vida</h2>
-                <svg class="svg-heart big red"><use href="#heart-icon"></use></svg>
+                <svg class="svg-icon big svg-heart red"><use href="#heart-icon"></use></svg>
                 <div class="tap-hint">Toca para leer</div>
             </div>
 
@@ -355,8 +350,8 @@
             <div class="content-right">
                 <p>Eres tan hermosa y me haces tan feliz, mi amor bonita. Eres tan linda como el cielito, y en ti veo todo lo bonito. Tu carita me fascina, tú, simplemente, me encantas.</p>
                 <div style="margin-top: 20px; text-align: right;">
-                    <svg class="svg-heart pink"><use href="#heart-icon"></use></svg>
-                    <svg class="svg-heart pink"><use href="#heart-icon"></use></svg>
+                    <svg class="svg-icon svg-heart pink"><use href="#heart-icon"></use></svg>
+                    <svg class="svg-icon svg-heart pink"><use href="#heart-icon"></use></svg>
                 </div>
             </div>
         </div>
@@ -364,7 +359,7 @@
         <div class="page">
             <div class="floating-message" onclick="this.style.opacity='0'; setTimeout(()=>this.style.display='none', 500);">
                 <h2>Eres mi adoración, mi princesa bonita, mi niña preciosa, tan linda, tan preciosa, me encantas tanto!</h2>
-                <svg class="svg-heart big pink"><use href="#heart-icon"></use></svg>
+                <svg class="svg-icon big svg-heart pink"><use href="#heart-icon"></use></svg>
                 <div class="tap-hint">Toca para leer</div>
             </div>
 
@@ -374,25 +369,25 @@
             <div class="content-right">
                 <p>En ti me pierdo, mi amor. Al ver tu carita me pongo nervioso y feliz al mismo tiempo. Vivo enamorado de ti y de la forma tan bonita que tienes de amar. Me tienes loquito por ti, te amoooooo tanto.</p>
                 <div style="margin-top: 20px; text-align: right;">
-                    <svg class="svg-heart red"><use href="#heart-icon"></use></svg>
+                    <svg class="svg-icon svg-heart red"><use href="#heart-icon"></use></svg>
                 </div>
             </div>
         </div>
 
         <div class="page" style="flex-direction: column;">
-            <p style="text-align: center; margin-bottom: 20px;">Mi amor esta canción siempre me recuerda a ti... <svg class="svg-heart red"><use href="#heart-icon"></use></svg></p>
+            <p style="text-align: center; margin-bottom: 20px;">Mi amor esta canción siempre me recuerda a ti... <svg class="svg-icon svg-heart red"><use href="#heart-icon"></use></svg></p>
             <iframe src="https://www.youtube.com/embed/5X-Mrc2l1d0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
         <div class="page">
-            <svg class="decor svg-heart big pink" style="top: 20px; left: 20px;"><use href="#heart-icon"></use></svg>
-            <svg class="decor svg-heart big red" style="bottom: 20px; right: 20px;"><use href="#heart-icon"></use></svg>
+            <svg class="decor svg-icon big svg-heart pink" style="top: 20px; left: 20px;"><use href="#heart-icon"></use></svg>
+            <svg class="decor svg-icon big svg-heart red" style="bottom: 20px; right: 20px;"><use href="#heart-icon"></use></svg>
             <img src="asAD.jpeg" class="photo-large" alt="Foto Especial">
         </div>
 
         <div class="page" style="background-color: #fce4ec; flex-direction: column;">
-            <svg class="decor svg-heart huge" style="top: -20px; left: -20px; opacity:0.2"><use href="#heart-icon"></use></svg>
-            <svg class="decor svg-heart huge" style="bottom: -20px; right: -20px; opacity:0.2"><use href="#heart-icon"></use></svg>
+            <svg class="decor svg-icon big svg-heart red" style="top: 20px; left: 20px; opacity:0.5"><use href="#heart-icon"></use></svg>
+            <svg class="decor svg-icon big svg-heart red" style="bottom: 20px; right: 20px; opacity:0.5"><use href="#heart-icon"></use></svg>
             
             <h1>¿Quieres ser mi San Valentín?</h1>
             <div class="options-grid">
@@ -404,12 +399,12 @@
         </div>
 
         <button class="next-btn" onclick="nextPage()">
-            Siguiente <svg class="svg-heart" style="width:20px;"><use href="#heart-icon"></use></svg>
+            Siguiente <svg class="svg-icon svg-heart" style="width:20px;"><use href="#heart-icon"></use></svg>
         </button>
     </div>
 
     <div id="final-celebration">
-        <svg class="svg-heart huge" style="margin-bottom: 20px;"><use href="#heart-icon"></use></svg>
+        <svg class="svg-icon big svg-heart red" style="margin-bottom: 20px; transform: scale(2);"><use href="#heart-icon"></use></svg>
         <h1>¡TE AMO!</h1>
         <p>Te amo mi amor, qué lindo estar junto a ti, me encanta tu presencia, me encanta todo contigo mi amor, eres mi princesa tan bonita, brillas tan lindo mi amor, gracias por estar aquí y amarnos tanto mi amor.</p>
     </div>
@@ -435,39 +430,60 @@
                 if (currentPage === pages.length - 1) {
                     nextBtn.style.display = 'none';
                 }
+                
+                // ¡Lanzar lluvia de corazones y flores al cambiar página!
+                triggerPageTurnRain();
+            }
+        }
+
+        function triggerPageTurnRain() {
+            for(let i=0; i<30; i++) {
+                const el = document.createElement('div');
+                el.classList.add('rain-element');
+                const isHeart = Math.random() > 0.5;
+                const iconId = isHeart ? '#heart-icon' : '#flower-icon';
+                const color = isHeart ? (Math.random() > 0.5 ? '#e91e63' : '#f48fb1') : '#ff80ab';
+                el.innerHTML = `<svg viewBox="0 0 24 24" style="fill:${color}"><use href="${iconId}"></use></svg>`;
+                
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.width = (Math.random() * 25 + 15) + 'px';
+                el.style.height = el.style.width;
+                el.style.animation = `pageRainFall ${Math.random() * 2 + 1.5}s linear forwards`;
+                document.body.appendChild(el);
+                
+                setTimeout(() => { el.remove(); }, 3500);
             }
         }
 
         function celebrate() {
             document.getElementById('final-celebration').style.display = 'flex';
-            launchHearts();
+            launchFinalRain();
         }
 
-        function launchHearts() {
-            for(let i=0; i<60; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('confetti-heart');
-                heart.innerHTML = `<svg viewBox="0 0 24 24" style="fill:${Math.random() > 0.5 ? '#e91e63' : '#f48fb1'}"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
-                heart.style.position = 'fixed';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.top = '-10vh';
-                heart.style.width = (Math.random() * 30 + 20) + 'px';
-                heart.style.animation = `fall ${Math.random() * 3 + 2}s linear infinite`;
-                document.body.appendChild(heart);
-            }
+        function launchFinalRain() {
+            setInterval(() => {
+                const el = document.createElement('div');
+                el.classList.add('rain-element');
+                const isHeart = Math.random() > 0.6;
+                const iconId = isHeart ? '#heart-icon' : '#flower-icon';
+                const color = isHeart ? (Math.random() > 0.5 ? '#e91e63' : '#f48fb1') : '#ff80ab';
+                el.innerHTML = `<svg viewBox="0 0 24 24" style="fill:${color}"><use href="${iconId}"></use></svg>`;
+                
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.width = (Math.random() * 30 + 20) + 'px';
+                el.style.height = el.style.width;
+                el.style.animation = `pageRainFall ${Math.random() * 3 + 2}s linear infinite`;
+                document.body.appendChild(el);
+            }, 200);
         }
 
         const style = document.createElement('style');
         style.innerHTML = `
-            @keyframes fall {
+            @keyframes pageRainFall {
                 to { transform: translateY(110vh) rotate(360deg); }
             }
-            .confetti-heart svg { width: 100%; height: 100%; }
         `;
         document.head.appendChild(style);
     </script>
 </body>
 </html>
-
-
-
