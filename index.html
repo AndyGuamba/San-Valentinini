@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             background-color: #ffebee;
-            /* Patrón de corazones en CSS puro (SVG encoded) */
+            /* Patrón de corazones de fondo */
             background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' fill='%23ffcdd2' opacity='0.5'/%3E%3C/svg%3E");
             font-family: 'Indie Flower', cursive;
             overflow: hidden;
@@ -40,7 +40,6 @@
             padding: 40px;
             box-sizing: border-box;
             background-color: #fff;
-            /* Marco de corazones en los bordes */
             border: 4px double #f8bbd0; 
             display: none;
             flex-direction: row;
@@ -60,7 +59,7 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* CLASE PARA LOS CORAZONES SVG (Reemplazo de emojis) */
+        /* CLASES PARA LOS CORAZONES SVG */
         .svg-heart {
             width: 30px;
             height: 30px;
@@ -71,9 +70,34 @@
         }
 
         .svg-heart.big { width: 60px; height: 60px; }
-        .svg-heart.huge { width: 120px; height: 120px; fill: #d81b60; animation: pulse 1.5s infinite; }
         .svg-heart.pink { fill: #f48fb1; }
         .svg-heart.red { fill: #c2185b; }
+
+        /* Contenedor del corazón flechado de la portada */
+        .cupid-heart-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .cupid-heart {
+            width: 100%;
+            height: 100%;
+            fill: #d81b60;
+        }
+
+        /* La flecha superpuesta */
+        .cupid-arrow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            fill: #444; /* Color de la flecha */
+            z-index: 10;
+        }
 
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -87,7 +111,6 @@
             justify-content: center;
             align-items: center;
             padding-right: 30px;
-            position: relative;
         }
 
         .content-right {
@@ -114,7 +137,6 @@
             margin-bottom: 20px;
         }
 
-        /* FOTOS */
         .photo {
             width: 100%;
             max-width: 350px;
@@ -134,7 +156,6 @@
             transform: rotate(2deg);
         }
 
-        /* MENSAJE FLOTANTE */
         .floating-message {
             position: absolute;
             top: 0;
@@ -167,7 +188,6 @@
             border-radius: 20px;
         }
 
-        /* DECORACIONES SVG FLOTANTES EN LAS ESQUINAS */
         .decor {
             position: absolute;
             z-index: 1;
@@ -191,7 +211,6 @@
             gap: 5px;
         }
 
-        /* Opciones */
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -215,7 +234,6 @@
             color: white;
         }
 
-        /* Celebración Final */
         #final-celebration {
             display: none;
             position: fixed;
@@ -223,7 +241,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #fce4ec; /* Fondo rosado suave, no negro */
+            background-color: #fce4ec; 
             z-index: 100;
             justify-content: center;
             align-items: center;
@@ -260,6 +278,9 @@
         <symbol id="heart-icon" viewBox="0 0 24 24">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </symbol>
+        <symbol id="arrow-icon" viewBox="0 0 24 24">
+            <path d="M2.01 21.99L2 22l2.99-2.99 2.98-2.98-1.42-1.41-1.57 1.57L12 9.16l2.92 2.92-1.41 1.42-2.92-2.92L5.59 15.59 7.16 17.16 5.75 18.58 3.42 16.25 2.01 17.66 2.01 21.99z M21.99 2.01L22 2l-2.99 2.99-2.98 2.98 1.42 1.41 1.57-1.57L12 14.84l-2.92-2.92 1.41-1.42 2.92 2.92L18.41 8.41 16.84 6.84 18.25 5.42 20.58 7.75 21.99 6.34 21.99 2.01z" fill="black"/>
+        </symbol>
     </svg>
 
     <div class="notebook">
@@ -272,7 +293,10 @@
             
             <h1>Te amo, me encantas tanto</h1>
             
-            <svg class="svg-heart huge"><use href="#heart-icon"></use></svg>
+            <div class="cupid-heart-container">
+                <svg class="cupid-heart"><use href="#heart-icon"></use></svg>
+                <svg class="cupid-arrow"><use href="#arrow-icon"></use></svg>
+            </div>
             
             <p style="text-align: center; margin-top: 40px; color: #888;">(Haz clic en Siguiente)</p>
         </div>
@@ -285,10 +309,10 @@
             </div>
 
             <div class="content-left">
-                <img src="imagen1.1.jpeg" class="photo" alt="Foto 1">
+                <img src="imagen1.jpeg" class="photo" alt="Foto 1">
             </div>
             <div class="content-right">
-                <p>Hola mi amor bonita, Te amo con todo mi corazón, pronto son fechas importantes mi amor y aunque no necesito un día especial para amarte, me gusta recordarte cuánto Te amo.</p>
+                <p>Hola, mi amor bonita. Te amo con todo mi corazón. Pronto vienen fechas importantes y, aunque no necesito un día especial para amarte, me encanta recordarte lo mucho que te amo y lo importante que eres para mí.</p>
                 <div style="margin-top: 20px; text-align: right;">
                     <svg class="svg-heart pink"><use href="#heart-icon"></use></svg>
                     <svg class="svg-heart red"><use href="#heart-icon"></use></svg>
@@ -307,7 +331,7 @@
                 <img src="imagen2.jpeg" class="photo" style="transform: rotate(2deg);" alt="Foto 2">
             </div>
             <div class="content-right">
-                <p>¡Me encanta estar junto a ti! Eres mi princesa bonita, mi niña preciosa, pero por sobre todo somos un equipo. Te amo intensamente siempre, todos los días Te amo mucho más.</p>
+                <p>¡Me encanta estar junto a ti! Eres mi princesa bonita, mi niña preciosa, pero, por sobre todo, somos un equipo. Te amo intensamente, siempre, todos los días y cada día te amo mucho más.</p>
                 <div style="margin-top: 20px; text-align: right;">
                     <svg class="svg-heart red"><use href="#heart-icon"></use></svg>
                 </div>
@@ -325,7 +349,7 @@
                 <img src="imagen3.jpeg" class="photo" style="transform: rotate(-2deg);" alt="Foto 3">
             </div>
             <div class="content-right">
-                <p>Eres tan hermosa, me haces tan feliz mi amor bonita, eres tan hermosa como el cielito. En ti veo todo lo bonito. Tu carita me fascina, tú, me encantas tanto mi amor.</p>
+                <p>Eres tan hermosa y me haces tan feliz, mi amor bonita. Eres tan linda como el cielito, y en ti veo todo lo bonito. Tu carita me fascina, tú, simplemente, me encantas.</p>
                 <div style="margin-top: 20px; text-align: right;">
                     <svg class="svg-heart pink"><use href="#heart-icon"></use></svg>
                     <svg class="svg-heart pink"><use href="#heart-icon"></use></svg>
@@ -344,7 +368,7 @@
                 <img src="imagen4.jpeg" class="photo" style="transform: rotate(3deg);" alt="Foto 4">
             </div>
             <div class="content-right">
-                <p>En ti me pierdo mi amor, al ver tu carita me pongo nervioso, me pongo feliz. Vivo enamorado de ti y de la forma que tienes de amar, me tienes loquito por ti. Te amo tanto.</p>
+                <p>En ti me pierdo, mi amor. Al ver tu carita me pongo nervioso y feliz al mismo tiempo. Vivo enamorado de ti y de la forma tan bonita que tienes de amar. Me tienes loquito por ti, te amoooooo tanto.</p>
                 <div style="margin-top: 20px; text-align: right;">
                     <svg class="svg-heart red"><use href="#heart-icon"></use></svg>
                 </div>
@@ -368,10 +392,10 @@
             
             <h1>¿Quieres ser mi San Valentín?</h1>
             <div class="options-grid">
-                <button class="option-btn" onclick="celebrate()">Sí</button>
-                <button class="option-btn" onclick="celebrate()">Por Supuesto</button>
-                <button class="option-btn" onclick="celebrate()">Sí sí sí sí</button>
-                <button class="option-btn" onclick="celebrate()">Obvio que Sí</button>
+                <button class="option-btn" onclick="celebrate()">Sí ❤️</button>
+                <button class="option-btn" onclick="celebrate()">Por Supuesto 💘</button>
+                <button class="option-btn" onclick="celebrate()">Sí sí sí sí 💖</button>
+                <button class="option-btn" onclick="celebrate()">Obvio que Sí 💘</button>
             </div>
         </div>
 
@@ -440,5 +464,6 @@
     </script>
 </body>
 </html>
+
 
 
